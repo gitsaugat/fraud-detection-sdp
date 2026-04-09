@@ -16,6 +16,8 @@ And produces:
 
 ## 🏗️ Architecture
 
+![Pipeline Architecture](pipeline.png)
+
 ### Data Flow
 Batch (CSV / Bronze) ──► Silver ──► All Transactions ──► Features ──► Fraud Detection
 ▲                     ▲
