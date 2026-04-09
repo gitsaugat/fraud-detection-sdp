@@ -1,21 +1,58 @@
-# frauddetection
+# 🚀 Fraud Detection System (Streaming + Batch | Databricks SDP)
 
-This folder defines all source code for the 'frauddetection' pipeline:
+## 📌 Overview
+This project implements a **real-time fraud detection system** using a **hybrid streaming + batch architecture** on Databricks **Structured Data Pipelines (SDP)**.
 
-- `explorations`: Ad-hoc notebooks used to explore the data processed by this pipeline.
-- `transformations`: All dataset definitions and transformations.
-- `utilities`: Utility functions and Python modules used in this pipeline.
+It processes:
+- 📥 Historical batch data (transactions)
+- ⚡ Real-time streaming data (Event Hubs)
 
-## Getting Started
+And produces:
+- 🧠 Feature-engineered datasets
+- 🚨 Real-time fraud scoring
+- 📊 Analytics-ready star schema
 
-To get started, go to the `transformations` folder -- most of the relevant source code lives there:
+---
 
-* By convention, every dataset under `transformations` is in a separate file.
-* Take a look at the sample under "sample_users_frauddetection.py" to get familiar with the syntax.
-  Read more about the syntax at https://docs.databricks.com/ldp/developer/python-ref.
-* Use `Run file` to run and preview a single transformation.
-* Use `Run pipeline` to run _all_ transformations in the entire pipeline.
-* Use `+ Add` in the file browser to add a new data set definition.
-* Use `Schedule` to run the pipeline on a schedule!
+## 🏗️ Architecture
 
-For more tutorials and reference material, see https://docs.databricks.com/ldp.
+### Data Flow
+Batch (CSV / Bronze) ──► Silver ──► All Transactions ──► Features ──► Fraud Detection
+▲                     ▲
+Streaming (Event Hubs) ───────────────────┘                     │
+│
+Historical Context (Lagged)
+
+### Layers
+
+- **Bronze**
+  - Raw ingestion (batch via notebook)
+  - Streaming ingestion (Event Hubs)
+
+- **Silver**
+  - Data cleaning, schema enforcement
+  - Deduplication
+
+- **Gold**
+  - Feature engineering (user behavior, location patterns)
+  - Fraud detection (real-time scoring)
+  - Star schema (facts + dimensions)
+
+---
+
+## ⚙️ Key Features
+
+### 1. Real-Time Fraud Detection
+- Processes streaming transactions instantly
+- Generates:
+  - `fraud_score`
+  - `fraud_flag`
+
+---
+
+### 2. Lag-Based Feature Engineering (Critical)
+To avoid **data leakage**, features are computed using **past data only**:
+
+```python
+timestamp < current_timestamp() - INTERVAL 10 MINUTES
+
