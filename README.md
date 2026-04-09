@@ -25,6 +25,21 @@ Streaming (Event Hubs) ───────────────────
 │
 Historical Context (Lagged)
 
+## 📡 Streaming Data Simulation
+
+To simulate real-world transaction flow, a custom Python-based Event Hub producer was built.
+
+### Features
+- Sends transaction events in real-time
+- Mimics production-like streaming behavior
+- Enables realistic fraud detection testing
+
+### Stack
+- Python
+- Azure Event Hubs SDK
+
+This allowed the pipeline to be tested under near real-time conditions instead of static datasets.
+
 ### Layers
 
 - **Bronze**
